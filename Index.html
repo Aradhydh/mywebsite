@@ -1,0 +1,200 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Tanishka 💖</title>
+
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;500;700&family=Pacifico&display=swap" rel="stylesheet">
+
+<style>
+body {
+    margin:0;
+    padding:0;
+    height:100vh;
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    background: linear-gradient(135deg, #ff9a9e, #fad0c4);
+    font-family: 'Poppins', sans-serif;
+    overflow:hidden;
+    text-align:center;
+    color:white;
+}
+
+.card {
+    background: rgba(255,255,255,0.25);
+    backdrop-filter: blur(12px);
+    padding:25px;
+    border-radius:20px;
+    box-shadow:0 0 25px rgba(255,255,255,0.4);
+    width:360px;
+}
+
+h1 {
+    font-family: 'Pacifico', cursive;
+    font-size:2.4rem;
+}
+
+img {
+    width:100%;
+    border-radius:15px;
+    margin-top:10px;
+    display:none;
+}
+
+.buttons {
+    margin-top:15px;
+}
+
+button {
+    padding:10px 20px;
+    border:none;
+    border-radius:20px;
+    font-size:1rem;
+    cursor:pointer;
+    transition:0.3s;
+    margin:6px;
+}
+
+#yes {
+    background:#ff4b7d;
+    color:white;
+}
+
+#no {
+    background:#444;
+    color:white;
+}
+
+#result, #gallery, #complimentBox {
+    display:none;
+    margin-top:15px;
+}
+
+.heart {
+    position:fixed;
+    top:-10px;
+    font-size:22px;
+    animation: fall linear forwards;
+}
+
+@keyframes fall {
+    to { transform: translateY(100vh); }
+}
+</style>
+</head>
+<body>
+
+<!-- Background Music -->
+<audio id="bgMusic" autoplay loop>
+    <source src="perfect.mp3" type="audio/mpeg">
+</audio>
+
+<div class="card">
+
+    <h1>Hey Tanishka 💖</h1>
+    <p id="intro">I made something special just for you ✨</p>
+    <button onclick="startSite()">Open Surprise 🎁</button>
+
+    <!-- Proposal -->
+    <div id="proposal" style="display:none;">
+        <h2>Will you be my Valentine? 💘</h2>
+        <button id="yes" onclick="yesClicked()">Yes 💖</button>
+        <button id="no" onmouseover="moveNo()">No 😏</button>
+    </div>
+
+    <!-- After Yes -->
+    <div id="result">
+        YAYYYY 💃💖 <br>
+        Knew you’d say yes Tanishka 😎❤️ <br>
+        Now our song + memories ✨
+    </div>
+
+    <!-- Gallery -->
+    <div id="gallery">
+        <img id="pic1" src="photo1.jpg">
+        <img id="pic2" src="photo2.jpg">
+        <img id="pic3" src="photo3.jpg">
+        <img id="pic4" src="photo4.jpg">
+        <br>
+        <button onclick="nextPic()">Next Memory 📸</button>
+    </div>
+
+    <!-- Compliments -->
+    <div id="complimentBox">
+        <p id="complimentText"></p>
+        <button onclick="newCompliment()">One more 💌</button>
+    </div>
+
+</div>
+
+<script>
+function startSite(){
+    document.getElementById("intro").style.display="none";
+    event.target.style.display="none";
+    document.getElementById("proposal").style.display="block";
+    document.getElementById("bgMusic").play();
+}
+
+function moveNo(){
+    const noBtn = document.getElementById("no");
+    const x = Math.random() * (window.innerWidth - 120);
+    const y = Math.random() * (window.innerHeight - 120);
+    noBtn.style.position = "absolute";
+    noBtn.style.left = x + "px";
+    noBtn.style.top = y + "px";
+}
+
+function yesClicked(){
+    document.getElementById("proposal").style.display="none";
+    document.getElementById("result").style.display="block";
+    document.getElementById("gallery").style.display="block";
+    document.getElementById("complimentBox").style.display="block";
+
+    startHearts();
+    showPic(0);
+    newCompliment();
+}
+
+let pics = ["pic1","pic2","pic3","pic4"];
+let picIndex = 0;
+
+function showPic(index){
+    pics.forEach(p => document.getElementById(p).style.display="none");
+    document.getElementById(pics[index]).style.display="block";
+}
+
+function nextPic(){
+    picIndex = (picIndex + 1) % pics.length;
+    showPic(picIndex);
+}
+
+const compliments = [
+ "Tanishka, you’re my favorite person 💖",
+ "Your smile is my weakness 🫶",
+ "You make everything feel magical ✨",
+ "Talking to you = instant happiness 🌸",
+ "You’re my forever vibe ❤️"
+];
+
+function newCompliment(){
+    const text = compliments[Math.floor(Math.random()*compliments.length)];
+    document.getElementById("complimentText").innerText = text;
+}
+
+function startHearts(){
+    setInterval(()=>{
+        const heart = document.createElement("div");
+        heart.classList.add("heart");
+        heart.innerHTML = "💖";
+        heart.style.left = Math.random() * 100 + "vw";
+        heart.style.animationDuration = (2 + Math.random() * 3) + "s";
+        document.body.appendChild(heart);
+        setTimeout(()=>heart.remove(),5000);
+    },300);
+}
+</script>
+
+</body>
+</html>
